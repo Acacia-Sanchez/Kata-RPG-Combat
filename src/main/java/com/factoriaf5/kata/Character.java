@@ -1,15 +1,20 @@
-package org.factoriaf5.rpgcombat;
+package com.factoriaf5.kata;
 
 public class Character {
 
     private int health;
     private int level;
     private boolean alive;
+    private int minDistance;
+    private int maxDistance;
 
-    public Character(int health, int level, boolean alive) { // el constructor de la clase
+    // el constructor de la clase
+    public Character(int health, int level, boolean alive, int minDistance, int maxDistance) {
         this.health = 1000;
         this.level = 1;
         this.alive = true;
+        this.minDistance = 2;
+        this.maxDistance = 20;
     }
 
     public int getHealth() {
@@ -36,11 +41,25 @@ public class Character {
         this.alive = alive;
     }
 
-    /// iteration one /// iteration two
+    public int getMinDistance() {
+        return minDistance;
+    }
+
+    public void setMinDistance(int minDistance) {
+        this.minDistance = minDistance;
+    }
+
+    public int getMaxDistance() {
+        return maxDistance;
+    }
+
+    public void setMaxDistance(int maxDistance) {
+        this.maxDistance = maxDistance;
+    }
 
     public void damageHealth(Character theOther, int damage) {
 
-        if (this != theOther && theOther.isAlive()) {
+        if (this != theOther && theOther.isAlive() && (theOther.minDistance >= 2 || theOther.maxDistance <= 20)) {
             if (theOther.getLevel() >= this.level + 5) {
                 theOther.health -= damage * 0.5; // así el daño se reduce un 50%
             } else if (theOther.getLevel() <= this.level - 5) {
@@ -73,13 +92,5 @@ public class Character {
             }
         }
     }
-}
 
-/*
- * Iteration Three:
- * 
- * Characters have an attack Max Range.
- * Melee fighters have a range of 2 meters.
- * Ranged fighters have a range of 20 meters.
- * Characters must be in range to deal damage to a target.
- */
+}
