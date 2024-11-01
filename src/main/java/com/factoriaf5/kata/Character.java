@@ -10,7 +10,15 @@ public class Character {
 
     // el constructor de la clase
     public Character(int health, int level, boolean alive, int minDistance, int maxDistance) {
-        this.health = 1000;
+        this.health = 1_000;
+        this.level = 1;
+        this.alive = true;
+        this.minDistance = 2;
+        this.maxDistance = 20;
+    }
+        // constructor vacío de parámetros, pero no de contenido
+    public Character() {
+        this.health = 1_000;
         this.level = 1;
         this.alive = true;
         this.minDistance = 2;
@@ -57,7 +65,7 @@ public class Character {
         this.maxDistance = maxDistance;
     }
 
-    public void damageHealth(Character theOther, int damage) {
+    public int damageHealth(Character theOther, int damage) {
 
         if (this != theOther && theOther.isAlive() && (theOther.minDistance >= 2 || theOther.maxDistance <= 20)) {
             if (theOther.getLevel() >= this.level + 5) {
@@ -82,15 +90,16 @@ public class Character {
             health = 0;
             alive = false;
         }
+        return this.health;
     }
 
-    public void healHealth(int heal) {
+    public int healHealth(int heal) {
         if (this.alive) {
             this.health += heal;
             if (this.health > 1000) {
                 this.health = 1000;
             }
         }
+        return this.health;
     }
-
 }
