@@ -124,6 +124,7 @@ public class CharacterTest {
         assertEquals(850, resultCharacter);
         assertEquals(850, resultTheOther);
     }
+
     @Test
     public void noAddHealToOtherTest() {
         character.setHealth(550);
@@ -134,6 +135,7 @@ public class CharacterTest {
         assertEquals(850, resultCharacter);
         assertEquals(550, resultTheOther);
     }
+
     @Test
     public void noAddHealToCharacterTest() {
         character.setHealth(550);
@@ -143,7 +145,7 @@ public class CharacterTest {
         int resultTheOther = theOther.healHealth(heal);
         assertEquals(550, resultCharacter);
         assertEquals(850, resultTheOther);
-    }   
+    }
 
     @Test
     public void limitHealth1000Test() {
@@ -203,12 +205,72 @@ public class CharacterTest {
 
     @Test
     public void testDamageReduction() {
+        theOther.setHealth(500);
+        theOther.setAlive(true);
+        theOther.setMinDistance(2);
+        theOther.setMaxDistance(20);
+        int charLevel = character.getLevel();
+        theOther.setLevel(charLevel + 5);
+        int damage = 100;
+        character.damageHealth(theOther, damage);
+        assertEquals(450, theOther.getHealth());
+    }
 
+    @Test
+    public void testNoDamage() {
+        character.setHealth(500);
+        character.setAlive(true);
+        character.setMinDistance(1);
+        character.setMaxDistance(19);
+        int theOtherLevel = theOther.getLevel();
+        character.setLevel(theOtherLevel + 5);
+        int damage = 100;
+        theOther.damageHealth(character, damage);
+        assertEquals(500, character.getHealth());
     }
 
     @Test
     public void testDamageIncrease() {
+        theOther.setHealth(500);
+        theOther.setAlive(true);
+        theOther.setMinDistance(2);
+        theOther.setMaxDistance(20);
+        int charLevel = character.getLevel();
+        theOther.setLevel(charLevel - 5);
+        int damage = 100;
+        character.damageHealth(theOther, damage);
+        assertEquals(350, theOther.getHealth());
+    }
 
+    @Test
+    public void testNoDamageToSelf() {
+        character.setHealth(500);
+        character.setAlive(true);
+        int damage = 100;
+        character.damageHealth(character, damage);
+        assertEquals(500, character.getHealth());
+    }
+
+    @Test
+    public void testNoDamageToDeadCharacter() {
+        theOther.setHealth(500);
+        theOther.setAlive(false);
+        int damage = 100;
+        character.damageHealth(theOther, damage);
+        assertEquals(500, theOther.getHealth());
+    }
+
+    @Test
+    public void testDamageNormal() {
+        theOther.setHealth(500);
+        theOther.setAlive(true);
+        theOther.setMinDistance(2);
+        theOther.setMaxDistance(20);
+        int charLevel = character.getLevel();
+        theOther.setLevel(charLevel + 2);
+        int damage = 100;
+        character.damageHealth(theOther, damage);
+        assertEquals(400, theOther.getHealth());
     }
 
 }

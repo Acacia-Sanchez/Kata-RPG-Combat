@@ -67,11 +67,13 @@ public class Character {
 
     public int damageHealth(Character theOther, int damage) {
 
-        if (this != theOther && theOther.isAlive() && (theOther.minDistance >= 2 || theOther.maxDistance <= 20)) {
+        if (this != theOther && theOther.isAlive() && (theOther.minDistance >= 2 && theOther.maxDistance <= 20)) {
             if (theOther.getLevel() >= this.level + 5) {
                 theOther.health -= damage * 0.5; // así el daño se reduce un 50%
             } else if (theOther.getLevel() <= this.level - 5) {
                 theOther.health -= damage * 1.5; // así el daño se incrementa un 50%
+            } else {
+                theOther.health -= damage;
             }
         }
         if (health <= 0) {
